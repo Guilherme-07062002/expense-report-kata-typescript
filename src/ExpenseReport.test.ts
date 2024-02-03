@@ -1,45 +1,24 @@
-import { printHelloWorld, printReport, sumTwoValues, Expense, ExpenseType } from './ExpenseReport'
+import { printReport, Expense } from './ExpenseReport'
 
-describe(`ExpenseReport`, () => {
-    it(`should keep its original behavior`, () => {
+describe(`testing expense report`, () => {
+    it(`should print the correct report`, () => {
         let interceptedOutput = ""
-        jest.spyOn(process.stdout, "write").mockImplementation((output: string): boolean => {
-            interceptedOutput += output
-            return true;
-        })
-        printReport([
-          new Expense("dinner", 5001)
-        ])
-        expect(interceptedOutput).toEqual("")
-    })
-})
+        jest.spyOn(process.stdout, "write").mockImplementation(
+            (output: string): boolean => {
+                interceptedOutput += output
+                return true;
+            }
+        )
+        const Dinner = new Expense("dinner", 5001)
+        const Breakfast = new Expense("breakfast", 1001)
+        const CarRental = new Expense("car-rental", 1000)
+        printReport([Dinner, Breakfast, CarRental])
 
-describe(`given I have this test suite`, () => {
-    it(`should always output Hello, World!`, () => {
-        //given
-        let actualOutputData = ""
-        jest.spyOn(process.stdout, "write").mockImplementation((data: string): boolean => {
-            actualOutputData += data
-            return true
-        })
-        const expectedOutputData = "Hello, World!\n"
-
-        // when
-        printHelloWorld()
-
-        // then
-        expect(actualOutputData).toEqual(expectedOutputData)
-    })
-
-    it(`should always do the correct sum`, () => {
-        // given
-        const a = 2, b = 3
-        const expectedValue = 5
-
-        // when
-        const actualValue = sumTwoValues(a, b)
-
-        // then
-        expect(actualValue).toEqual(expectedValue)
+        expect(interceptedOutput).toContain(`Expenses: 2024-02-03`)
+        expect(interceptedOutput).toContain(`Dinner	5001`)
+        expect(interceptedOutput).toContain(`Breakfast	1001`)
+        expect(interceptedOutput).toContain(`Car Rental	1000`)
+        expect(interceptedOutput).toContain(`Meal Expenses: 6002`)
+        expect(interceptedOutput).toContain(`Total Expenses: 7002`)
     })
 })

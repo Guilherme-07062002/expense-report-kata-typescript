@@ -1,11 +1,3 @@
-const message = 'Hello, World!\n';
-
-const sumTwoValues = (a: number, b: number): number => a + b
-
-const printHelloWorld = (): void => {
-  process.stdout.write(message);
-}
-
 type ExpenseType = "dinner" | "breakfast" | "car-rental"
 
 class Expense {
@@ -53,4 +45,4 @@ function printReport(expenses: Expense[]) {
   process.stdout.write("Total Expenses: " + totalExpenses + "\n")
 }
 
-export {sumTwoValues, printHelloWorld, printReport, Expense, ExpenseType}
+export { printReport, Expense, ExpenseType }
